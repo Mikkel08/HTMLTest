@@ -1,3 +1,4 @@
+// scripts/script.js
 document.addEventListener("DOMContentLoaded", function () {
     // Gør knappen aktiv
     const sendButton = document.getElementById("sendButton");
@@ -12,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const prompt = createPrompt();
 
         try {
-            const response = await fetch('http://localhost:5000/send-to-claude', {
+            const response = await fetch('http://localhost:5001/send-to-claude', { // Bemærk porten 5001
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
