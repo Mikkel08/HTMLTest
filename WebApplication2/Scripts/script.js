@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ prompt })
+                body: JSON.stringify({prompt})
             });
 
             if (!response.ok) {
@@ -90,8 +90,8 @@ document.addEventListener("DOMContentLoaded", function () {
         inputContainer.classList.remove("hidden");
         responseBox.classList.add("hidden");
     };
-
     window.goToQuiz = function () {
-        alert("Dette vil tage dig til quizzen. Quiz-funktionaliteten skal implementeres.");
+        window.location.href = 'generate_questions.html';
     };
+
 });

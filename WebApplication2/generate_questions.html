@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spørgsmålsgenerator</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #1e1e2f;
+            color: #fff;
+            padding: 20px;
+        }
+        input[type="text"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            border: none;
+            background-color: #444;
+            color: white;
+        }
+        button {
+            background-color: #4e8ef7;
+            color: white;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #376bb5;
+        }
+        .result-box {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #2a2a40;
+            border-radius: 15px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+<h1>Spørgsmålsgenerator</h1>
+<label for="generatedText">Indtast Teksten:</label>
+<input type="text" id="generatedText" placeholder="Indsæt den genererede tekst her">
+<button id="generateButton" onclick="generateQuestions()">Generer Spørgsmål</button>
+
+<div id="questionsBox" class="result-box" style="display: none;"></div>
+
+<script>
+    async function generateQuestions() {
+        const generateButton = document.getElementById('generateButton');
+        generateButton.disabled = true;
+        generateButton.textContent = 'Genererer...';
+
+        const text = document.getElementById('generatedText').value;
+
+        try {
+            const response = await fetch('http://localhost:5001/generate-questions', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ text })
+            });
+
+            if (!response.ok) {
+                throw new Error('Netværksrespons var ikke ok');
+            }
+
+            const data = await response.json();
+            document.getElementById('questionsBox').innerHTML = '<h3>Spørgsmål:</h3><p>' + (data.questions || 'Ingen spørgsmål modtaget.') + '</p>';
+            document.getElementById('questionsBox').style.display = 'block';
+        } catch (error) {
+            console.error('Fejl ved kald til OpenAI:', error);
+            alert('Der opstod en fejl ved kald til OpenAI API. Prøv igen senere.');
+        } finally {
+            generateButton.disabled = false;
+            generateButton.textContent = 'Generer Spørgsmål';
+        }
+    }
+</script>
+</body>
+</html>
