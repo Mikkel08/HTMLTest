@@ -41,25 +41,53 @@
             background-color: #f39c12;
             cursor: not-allowed;
         }
+        .hidden {
+            display: none;
+        }
     </style>
 </head>
 <body>
-<div class="container">
+<div class="container" id="inputContainer">
     <h2>Test Claude API</h2>
     <label for="niveau">Niveau (0-10):</label>
-    <input type="number" id="niveau" min="0" max="10" placeholder="Indtast niveau her" style="width: 100%; padding: 10px; border-radius: 8px; border: none; background-color: #444; color: white;">
+    <input type="number" id="niveau" min="0" max="10" value="5" placeholder="Indtast niveau her" style="width: 100%; padding: 10px; border-radius: 8px; border: none; background-color: #444; color: white;">
 
     <label for="laengde">Længde (antal tegn):</label>
-    <input type="number" id="laengde" min="10" max="1000" placeholder="Indtast længde her" style="width: 100%; padding: 10px; border-radius: 8px; border: none; background-color: #444; color: white;">
+    <input type="number" id="laengde" min="10" max="1000" value="200" placeholder="Indtast længde her" style="width: 100%; padding: 10px; border-radius: 8px; border: none; background-color: #444; color: white;">
 
     <label for="fokusomraader">Fokusområder:</label>
-    <input type="text" id="fokusomraader" placeholder="Fx eventyr, humor, natur" style="width: 100%; padding: 10px; border-radius: 8px; border: none; background-color: #444; color: white;">
+    <input type="text" id="fokusomraader" value="eventyr, humor" placeholder="Fx eventyr, humor, natur" style="width: 100%; padding: 10px; border-radius: 8px; border: none; background-color: #444; color: white;">
 
     <label for="hovedpersonen">Hovedpersonens Navn:</label>
-    <input type="text" id="hovedpersonen" placeholder="Indtast hovedpersonens navn" style="width: 100%; padding: 10px; border-radius: 8px; border: none; background-color: #444; color: white;">
+    <input type="text" id="hovedpersonen" value="Emil" placeholder="Indtast hovedpersonens navn" style="width: 100%; padding: 10px; border-radius: 8px; border: none; background-color: #444; color: white;">
+
+    <label for="vejrEllerSaeson">Vejr eller Sæson:</label>
+    <input type="text" id="vejrEllerSaeson" value="solrig sommerdag" placeholder="Fx sommerdag, vinteraften" style="width: 100%; padding: 10px; border-radius: 8px; border: none; background-color: #444; color: white;">
+
+    <label for="lokation">Lokation:</label>
+    <input type="text" id="lokation" value="park" placeholder="Fx park, skov, by" style="width: 100%; padding: 10px; border-radius: 8px; border: none; background-color: #444; color: white;">
+
+    <label for="kulturelleElementer">Kulturelle Elementer:</label>
+    <input type="text" id="kulturelleElementer" value="traditionel mad" placeholder="Fx traditionel mad, højtider" style="width: 100%; padding: 10px; border-radius: 8px; border: none; background-color: #444; color: white;">
+
+    <label for="personligeTraek">Personlige Træk:</label>
+    <input type="text" id="personligeTraek" value="nysgerrig" placeholder="Fx modig, nysgerrig, genert" style="width: 100%; padding: 10px; border-radius: 8px; border: none; background-color: #444; color: white;">
+
+    <label for="laeserensNavn">Læserens Navn:</label>
+    <input type="text" id="laeserensNavn" value="Mikkel" placeholder="Indtast læserens navn" style="width: 100%; padding: 10px; border-radius: 8px; border: none; background-color: #444; color: white;">
+
+    <label for="magiEllerSuperkraefter">Magi eller Superkræfter:</label>
+    <input type="text" id="magiEllerSuperkraefter" value="usynlighed" placeholder="Fx usynlighed, flyvning" style="width: 100%; padding: 10px; border-radius: 8px; border: none; background-color: #444; color: white;">
+
+    <label for="karakterensKaeldyr">Kæledyr:</label>
+    <input type="text" id="karakterensKaeldyr" value="hund" placeholder="Fx hund, kat, fugl" style="width: 100%; padding: 10px; border-radius: 8px; border: none; background-color: #444; color: white;">
 
     <button id="sendButton" onclick="sendTestRequest()">Send til Claude</button>
-    <div id="responseBox" style="margin-top: 20px; padding: 15px; background-color: #32324a; border-radius: 10px; box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);"></div>
+</div>
+
+<div id="responseBox" class="container hidden" style="margin-top: 20px; padding: 15px; background-color: #32324a; border-radius: 10px; box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);">
+    <button onclick="showInputFields()">Vis Inputfelter</button>
+    <button onclick="goToQuiz()">Gå til Quiz</button>
 </div>
 
 <script>
@@ -73,8 +101,37 @@
         const laengde = document.getElementById('laengde').value;
         const fokusomraader = document.getElementById('fokusomraader').value;
         const hovedpersonen = document.getElementById('hovedpersonen').value;
+        const vejrEllerSaeson = document.getElementById('vejrEllerSaeson').value;
+        const lokation = document.getElementById('lokation').value;
+        const kulturelleElementer = document.getElementById('kulturelleElementer').value;
+        const personligeTraek = document.getElementById('personligeTraek').value;
+        const laeserensNavn = document.getElementById('laeserensNavn').value;
+        const magiEllerSuperkraefter = document.getElementById('magiEllerSuperkraefter').value;
+        const karakterensKaeldyr = document.getElementById('karakterensKaeldyr').value;
 
-        const prompt = `You are tasked with writing a children's text in Danish. Follow these instructions carefully to create an appropriate text:\n\n1. Writing Level: The text should be written at a ${niveau} level, measured on a scale from 0 to 10.\n\n2. Text Length: The text should be ${laengde} characters long, including spaces.\n\n3. Focus Areas: ${fokusomraader}\n\n4. Main Character Name: The main character's name should be ${hovedpersonen}.`;
+        const prompt = `You are tasked with writing a children's text in Danish. Follow these instructions carefully to create an appropriate text:
+
+1. Writing Level: The text should be written at a ${niveau} level, measured on a scale from 0 to 10.
+
+2. Text Length: The text should be ${laengde} characters long, including spaces.
+
+3. Focus Areas: ${fokusomraader}
+
+4. Main Character Name: The main character's name should be ${hovedpersonen}.
+
+5. Season or Weather: ${vejrEllerSaeson}
+
+6. Location Details: ${lokation}
+
+7. Cultural Elements: ${kulturelleElementer}
+
+8. Personal Traits: ${personligeTraek}
+
+9. Reader's Name: ${laeserensNavn}
+
+10. Magic or Superpowers: ${magiEllerSuperkraefter}
+
+11. Character Pets: ${karakterensKaeldyr}`;
 
         try {
             const response = await fetch('http://localhost:5001/send-to-claude', {
@@ -90,7 +147,10 @@
             }
 
             const data = await response.json();
-            document.getElementById('responseBox').innerHTML = '<h3>Claude Resultat:</h3><p>' + (data.response.completion || 'Ingen svar modtaget fra Claude') + '</p>';
+            document.getElementById('inputContainer').classList.add('hidden');
+            const responseBox = document.getElementById('responseBox');
+            responseBox.classList.remove('hidden');
+            responseBox.innerHTML = '<h3>Claude Resultat:</h3><p>' + (data.response.completion || 'Ingen svar modtaget fra Claude') + '</p>' + responseBox.innerHTML;
         } catch (error) {
             console.error('Fejl ved kald til Claude:', error);
             alert('Der opstod en fejl ved kald til Claude API. Prøv igen senere.');
@@ -99,6 +159,15 @@
             sendButton.classList.remove('loading');
             sendButton.textContent = 'Send til Claude';
         }
+    }
+
+    function showInputFields() {
+        document.getElementById('inputContainer').classList.remove('hidden');
+        document.getElementById('responseBox').classList.add('hidden');
+    }
+
+    function goToQuiz() {
+        alert('Quiz-funktionalitet er under udvikling.');
     }
 </script>
 </body>
