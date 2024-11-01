@@ -21,7 +21,7 @@ app.use(express.static(path.join(__dirname, '../public')));
 
 // HTML Routes
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '..index.html'));
+    res.sendFile(path.join(__dirname, '../public/index.html')); // Korrigeret sti til index.html
 });
 
 app.get('/quiz', (req, res) => {
@@ -34,10 +34,10 @@ app.get('/points', (req, res) => {
 
 // Claude API endpoint
 app.post('/send-to-claude', async (req, res) => {
-    let { prompt } = req.body;
+    let {prompt} = req.body;
 
     if (!prompt) {
-        return res.status(400).json({ error: 'Prompt mangler i forespørgslen.' });
+        return res.status(400).json({error: 'Prompt mangler i forespørgslen.'});
     }
 
     try {
@@ -59,19 +59,19 @@ app.post('/send-to-claude', async (req, res) => {
         });
 
         console.log('Claude API response:', response);
-        res.json({ response: response.content[0].text });
+        res.json({response: response.content[0].text});
     } catch (error) {
         console.error('Fejl ved kald af Claude API:', error.response ? error.response.data : error.message);
-        res.status(500).json({ error: 'Der opstod en fejl under kaldet til Claude API.' });
+        res.status(500).json({error: 'Der opstod en fejl under kaldet til Claude API.'});
     }
 });
 
 // Quiz spørgsmål endpoint
 app.post('/questions', async (req, res) => {
-    const { text } = req.body;
+    const {text} = req.body;
 
     if (!text) {
-        return res.status(400).json({ error: 'Tekst mangler i forespørgslen.' });
+        return res.status(400).json({error: 'Tekst mangler i forespørgslen.'});
     }
 
     try {
@@ -116,11 +116,11 @@ app.post('/questions', async (req, res) => {
 
         // Parse response og send
         const questions = JSON.parse(response.data.choices[0].message.content);
-        res.json({ questions });
+        res.json({questions});
 
     } catch (error) {
         console.error('Fejl ved generering af spørgsmål:', error);
-        res.status(500).json({ error: error.message });
+        res.status(500).json({error: error.message});
     }
 });
 
@@ -131,6 +131,48 @@ app.use((err, req, res, next) => {
         error: 'Der opstod en serverfejl',
         message: err.message
     });
+});
+
+
+// Tilføj denne rute til din server.js
+app.post('/generate-image', async (req, res) => {
+    console.log('Modtog image generation request:', req.body);
+    try {
+        const { prompt } = req.body;
+
+        console.log('Kalder DALL-E med prompt:', prompt);
+
+        const response = await fetch('https://api.openai.com/v1/images/generations', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer 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`, 
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                model: "dall-e-3",
+                prompt: prompt + ", children's book style, digital art, vibrant colors",
+                n: 1,
+                size: "1024x1024"
+            })
+        });
+
+        console.log('DALL-E response status:', response.status);
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            console.error('DALL-E API Error:', errorData);
+            throw new Error(`DALL-E API fejl: ${errorData.error?.message || 'Unknown error'}`);
+        }
+
+        const data = await response.json();
+        console.log('DALL-E success! Image URL:', data.data[0].url);
+
+        res.json({ imageUrl: data.data[0].url });
+
+    } catch (error) {
+        console.error('Server Error i generate-image:', error);
+        res.status(500).json({ error: error.message });
+    }
 });
 
 // Start server

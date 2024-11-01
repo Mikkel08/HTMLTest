@@ -2,7 +2,7 @@
 <html lang="da">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Point Oversigt</title>
     <style>
         * {
@@ -165,16 +165,16 @@
 </head>
 <body>
 <nav class="nav-menu">
-    <a href="/" class="nav-link">Generator</a>
-    <a href="/quiz" class="nav-link">Quiz</a>
-    <a href="/points" class="nav-link active">Point</a>
+    <a class="nav-link" href="/">Generator</a>
+    <a class="nav-link" href="/quiz">Quiz</a>
+    <a class="nav-link active" href="/points">Point</a>
 </nav>
 
 <div class="container">
     <div class="score-section">
         <div class="score-label">Samlede Point</div>
         <div class="total-score" id="totalScore">0</div>
-        <button onclick="window.location.href='/'" class="nav-button">
+        <button class="nav-button" onclick="window.location.href='/'">
             Lav Ny Historie
         </button>
     </div>
@@ -201,7 +201,7 @@
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         // Hent gemte scores og statistik
         const quizScore = parseInt(localStorage.getItem('quizScore') || 0);
         let totalScore = parseInt(localStorage.getItem('totalScore') || 0);

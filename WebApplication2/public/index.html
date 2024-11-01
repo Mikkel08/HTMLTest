@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>AI Integration Test</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #1e1e2f;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #2a2a40;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+            width: 90%; /* Responsiv bredde */
+            max-width: 600px; /* Maksimal bredde */
+        }
+
+        label, button {
+            display: block;
+            margin-top: 20px;
+        }
+
+        button {
+            background-color: #4e8ef7;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #376bb5;
+        }
+
+        .loading {
+            background-color: #f39c12;
+            cursor: not-allowed;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        #imagesContainer {
+            margin-top: 20px;
+        }
+
+        #imagesContainer img {
+            width: 100%; /* Billederne tilpasser sig containerens bredde */
+            border-radius: 8px;
+            margin-top: 10px; /* Margin mellem billeder */
+        }
+    </style>
+</head>
+<body>
+<div class="container" id="inputContainer">
+    <h2>Test Claude API</h2>
+    <label for="niveau">Niveau (0-10):</label>
+    <input id="niveau" max="10" min="0" placeholder="Indtast niveau her" type="number" value="5">
+
+    <label for="laengde">Længde (antal tegn):</label>
+    <input id="laengde" max="1000" min="10" placeholder="Indtast længde her" type="number" value="200">
+
+    <label for="fokusomraader">Fokusområder:</label>
+    <input id="fokusomraader" placeholder="Fx eventyr, humor, natur" type="text" value="eventyr, humor">
+
+    <label for="hovedpersonen">Hovedpersonens Navn:</label>
+    <input id="hovedpersonen" placeholder="Indtast hovedpersonens navn" type="text" value="Emil">
+
+    <label for="vejrEllerSaeson">Vejr eller Sæson:</label>
+    <input id="vejrEllerSaeson" placeholder="Fx sommerdag, vinteraften" type="text" value="solrig sommerdag">
+
+    <label for="lokation">Lokation:</label>
+    <input id="lokation" placeholder="Fx park, skov, by" type="text" value="park">
+
+    <label for="kulturelleElementer">Kulturelle Elementer:</label>
+    <input id="kulturelleElementer" placeholder="Fx traditionel mad, højtider" type="text" value="traditionel mad">
+
+    <label for="personligeTraek">Personlige Træk:</label>
+    <input id="personligeTraek" placeholder="Fx modig, nysgerrig, genert" type="text" value="nysgerrig">
+
+    <label for="laeserensNavn">Læserens Navn:</label>
+    <input id="laeserensNavn" placeholder="Indtast læserens navn" type="text" value="Mikkel">
+
+    <label for="magiEllerSuperkraefter">Magi eller Superkræfter:</label>
+    <input id="magiEllerSuperkraefter" placeholder="Fx usynlighed, flyvning" type="text" value="usynlighed">
+
+    <label for="karakterensKaeldyr">Kæledyr:</label>
+    <input id="karakterensKaeldyr" placeholder="Fx hund, kat, fugl" type="text" value="hund">
+
+    <button id="sendButton" onclick="sendTestRequest()">Send til Claude</button>
+</div>
+
+<div class="container hidden" id="responseBox">
+    <h3>Claude Resultat:</h3>
+    <p id="generatedStory"></p>
+    <button onclick="showInputFields()">Vis Inputfelter</button>
+    <button onclick="goToQuiz()">Gå til Quiz</button>
+</div>
+
+<!-- Placer knappen og billedcontaineren her -->
+<div class="container">
+    <button id="generateImageButton">Generate Images</button>
+    <div id="confirmationMessage" style="display: none;"></div>
+</div>
+
+    <script>
+        const generateImageButton = document.getElementById('generateImageButton');
+        const confirmationMessage = document.getElementById('confirmationMessage');
+
+        generateImageButton.addEventListener('click', () => {
+            // Change button color and disable it
+            generateImageButton.style.backgroundColor = '#007bff'; // Change to a blue color
+            generateImageButton.style.color = '#fff'; // Change text color to white
+            generateImageButton.disabled = true; // Disable the button to prevent multiple clicks
+
+            // Show confirmation message
+            confirmationMessage.style.display = 'block';
+            confirmationMessage.textContent = 'Generating images… Please wait.';
+
+            // Call your generateImages function here
+            generateImages().then(() => {
+                // Reset button styles and enable it again after processing
+                generateImageButton.style.backgroundColor = ''; // Reset to original color
+                generateImageButton.style.color = ''; // Reset text color
+                generateImageButton.disabled = false; // Re-enable the button
+                confirmationMessage.textContent = 'Images generated successfully!'; // Update message
+            }).catch((error) => {
+                // Handle error and reset button
+                console.error('Error generating images:', error);
+                confirmationMessage.textContent = 'Error generating images. Please try again.';
+                generateImageButton.disabled = false; // Re-enable the button
+            });
+        });
+
+        
+    </script>
+<!-- Reference to the external script.js file -->
+<script src="Scripts/script.js"></script>
+</body>
+</html>
