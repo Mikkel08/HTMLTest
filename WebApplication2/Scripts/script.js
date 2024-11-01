@@ -28,11 +28,12 @@ document.addEventListener("DOMContentLoaded", function () {
             const data = await response.json();
 
             document.getElementById('responseBox').innerHTML = `
-                <h3>Claude Resultat:</h3>
-                <p>${data.response.completion || 'Ingen svar modtaget fra Claude'}</p>
-                <button onclick="showInputFields()">Vis Inputfelter</button>
-                <button onclick="goToQuiz()">Gå til Quiz</button>
-            `;
+    <h3>Claude Resultat2:</h3>
+    <p>${data.response || 'Ingen svar modtaget fra Claude'}</p>
+    <button onclick="showInputFields()">Vis Inputfelter</button>
+    <button onclick="goToQuiz()">Gå til Quiz</button>
+`;
+
 
             inputContainer.classList.add("hidden");
             responseBox.classList.remove("hidden");
