@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const Anthropic = require('@anthropic-ai/sdk');
 const axios = require('axios');
+const path = require('path');
 
 const app = express();
 const port = 5001;
@@ -14,11 +15,24 @@ const anthropic = new Anthropic({
 });
 
 // Middleware
-app.use(cors()); // Allow CORS for all origins
-app.use(bodyParser.json()); // Parse JSON bodies
+app.use(cors());
+app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, '../public')));
 
-// Endpoint to handle requests to Claude API
-app.options('/send-to-claude', cors()); // Handle preflight request
+// HTML Routes
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '..index.html'));
+});
+
+app.get('/quiz', (req, res) => {
+    res.sendFile(path.join(__dirname, '../public/quiz.html'));
+});
+
+app.get('/points', (req, res) => {
+    res.sendFile(path.join(__dirname, '../public/points.html'));
+});
+
+// Claude API endpoint
 app.post('/send-to-claude', async (req, res) => {
     let { prompt } = req.body;
 
@@ -27,25 +41,33 @@ app.post('/send-to-claude', async (req, res) => {
     }
 
     try {
-        // Sending request to Claude API using SDK
-        const response = await anthropic.completions.create({
-            model: 'claude-2.1',
-            prompt: `\n\nHuman: ${prompt}\n\nAssistant:`,
-            max_tokens_to_sample: 1024,
-            stop_sequences: ['\n\nHuman:'],
+        const response = await anthropic.messages.create({
+            model: "claude-3-5-sonnet-20241022",
+            max_tokens: 8192,
+            temperature: 1,
+            messages: [
+                {
+                    role: "user",
+                    content: [
+                        {
+                            type: "text",
+                            text: prompt
+                        }
+                    ]
+                }
+            ]
         });
 
-        console.log('Claude API response:', response.completion); // Log response
-        res.json({ response: response.completion });
+        console.log('Claude API response:', response);
+        res.json({ response: response.content[0].text });
     } catch (error) {
         console.error('Fejl ved kald af Claude API:', error.response ? error.response.data : error.message);
         res.status(500).json({ error: 'Der opstod en fejl under kaldet til Claude API.' });
     }
 });
 
-// Endpoint to handle requests to OpenAI API for question generation
-app.options('/generate-questions', cors()); // Handle preflight request
-app.post('/generate-questions', async (req, res) => {
+// Quiz spørgsmål endpoint
+app.post('/questions', async (req, res) => {
     const { text } = req.body;
 
     if (!text) {
@@ -53,7 +75,6 @@ app.post('/generate-questions', async (req, res) => {
     }
 
     try {
-        // Sending request to OpenAI API
         const response = await axios.post(
             'https://api.openai.com/v1/chat/completions',
             {
@@ -61,29 +82,58 @@ app.post('/generate-questions', async (req, res) => {
                 messages: [
                     {
                         role: 'user',
-                        content: `Lav 5 spørgsmål baseret på følgende tekst:\n\n${text}\n\nSpørgsmål:`
+                        content: `Generer 5 multiple choice spørgsmål baseret på denne tekst. 
+                                For hvert spørgsmål, lav 4 svarmuligheder og marker det korrekte svar.
+                                Format svaret som JSON array:
+                                [
+                                    {
+                                        "question": "spørgsmålstekst",
+                                        "options": ["svar1", "svar2", "svar3", "svar4"],
+                                        "correctAnswer": 0
+                                    }
+                                ]
+                                
+                                Tekst: ${text}
+
+                                Regler for spørgsmål:
+                                1. Spørgsmålene skal teste forståelse af historiens indhold
+                                2. Svarmulighederne skal være klart forskellige
+                                3. Der må kun være ét korrekt svar
+                                4. Spørgsmålene skal være på dansk
+                                5. Sværhedsgraden skal variere fra let til svær`
                     }
                 ],
-                max_tokens: 150,
+                max_tokens: 1000,
                 temperature: 0.7
             },
             {
                 headers: {
-                    'Authorization': `Bearer ${'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'}`,
+                    'Authorization': `Bearer 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`,
                     'Content-Type': 'application/json'
-                },
+                }
             }
         );
 
-        console.log('OpenAI API response:', response.data.choices[0].message.content.trim()); // Log response
-        res.json({ questions: response.data.choices[0].message.content.trim() });
+        // Parse response og send
+        const questions = JSON.parse(response.data.choices[0].message.content);
+        res.json({ questions });
+
     } catch (error) {
-        console.error('Fejl ved kald af OpenAI API:', error.response ? error.response.data : error.message);
-        res.status(500).json({ error: 'Der opstod en fejl under kaldet til OpenAI API.' });
+        console.error('Fejl ved generering af spørgsmål:', error);
+        res.status(500).json({ error: error.message });
     }
 });
 
-// Start serveren
+// Error handling middleware
+app.use((err, req, res, next) => {
+    console.error('Server Error:', err);
+    res.status(500).json({
+        error: 'Der opstod en serverfejl',
+        message: err.message
+    });
+});
+
+// Start server
 app.listen(port, () => {
-    console.log(`Serveren kører på http://localhost:${port}`);
+    console.log(`Server kører på http://localhost:${port}`);
 });

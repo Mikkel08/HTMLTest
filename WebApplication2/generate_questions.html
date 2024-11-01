@@ -3,83 +3,314 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spørgsmålsgenerator</title>
+    <title>Quiz</title>
     <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #1e1e2f;
-            color: #fff;
-            padding: 20px;
+            font-family: system-ui, -apple-system, sans-serif;
+            line-height: 1.5;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: #f5f5f5;
         }
-        input[type="text"] {
-            width: calc(100% - 20px);
-            padding: 10px;
-            margin-bottom: 20px;
+
+        .container {
+            background-color: white;
+            padding: 2rem;
             border-radius: 8px;
-            border: none;
-            background-color: #444;
-            color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
         }
-        button {
-            background-color: #4e8ef7;
-            color: white;
-            padding: 15px 25px;
-            border: none;
-            border-radius: 10px;
+
+        h1, h2 {
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .question-container {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background-color: #f8fafc;
+            border-radius: 8px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        .question {
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            color: #1f2937;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .option {
+            padding: 1rem;
+            background-color: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 6px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: all 0.2s;
         }
-        button:hover {
-            background-color: #376bb5;
+
+        .option:hover {
+            background-color: #f3f4f6;
+            border-color: #d1d5db;
         }
-        .result-box {
-            margin-top: 20px;
-            padding: 20px;
-            background-color: #2a2a40;
-            border-radius: 15px;
-            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
+
+        .option.selected {
+            background-color: #eff6ff;
+            border-color: #3b82f6;
         }
+
+        .option.correct {
+            background-color: #dcfce7;
+            border-color: #22c55e;
+        }
+
+        .option.incorrect {
+            background-color: #fee2e2;
+            border-color: #ef4444;
+        }
+
+        .points {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #3b82f6;
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background-color: #f8fafc;
+            border-radius: 8px;
+        }
+
+        .check-button {
+            background-color: #3b82f6;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 500;
+            width: 100%;
+            margin-top: 2rem;
+            transition: all 0.2s;
+        }
+
+        .check-button:hover {
+            background-color: #2563eb;
+            transform: translateY(-1px);
+        }
+
+        .check-button:disabled {
+            background-color: #93c5fd;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .story-section {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #f8fafc;
+            border-radius: 8px;
+        }
+
+        .error {
+            color: #dc2626;
+            background-color: #fee2e2;
+            padding: 1rem;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+        }
+        <style>
+             /* Behold alle eksisterende styles fra index.html */
+
+             /* Tilføj nye styles for score visning */
+         .score-display {
+             font-size: 1.2rem;
+             color: #374151;
+             margin: 1rem 0;
+             padding: 1rem;
+             background-color: #f3f4f6;
+             border-radius: 8px;
+             text-align: center;
+         }
+
+        .result-section {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #f8fafc;
+            border-radius: 8px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-button {
+            background-color: #3b82f6;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            margin-top: 1rem;
+            width: 100%;
+            transition: all 0.2s;
+        }
+
+        .nav-button:hover {
+            background-color: #2563eb;
+            transform: translateY(-1px);
+        }
+    </style>
     </style>
 </head>
 <body>
-<h1>Spørgsmålsgenerator</h1>
-<label for="generatedText">Indtast Teksten:</label>
-<input type="text" id="generatedText" placeholder="Indsæt den genererede tekst her">
-<button id="generateButton" onclick="generateQuestions()">Generer Spørgsmål</button>
+<div class="container">
+    <div class="points">
+        Point: <span id="score">0</span> / <span id="totalQuestions">0</span>
+    </div>
 
-<div id="questionsBox" class="result-box" style="display: none;"></div>
+    <div id="questionsContent"></div>
+
+    <button class="check-button" onclick="checkAnswers()" id="checkButton">Tjek svar</button>
+
+    <div class="story-section">
+        <h2>Original Historie:</h2>
+        <div id="storyContent"></div>
+    </div>
+</div>
 
 <script>
-    async function generateQuestions() {
-        const generateButton = document.getElementById('generateButton');
-        generateButton.disabled = true;
-        generateButton.textContent = 'Genererer...';
+    let correctAnswers = [];
+    let selectedAnswers = new Map();
+    let totalScore = 0; // Global score variabel
 
-        const text = document.getElementById('generatedText').value;
+    document.addEventListener('DOMContentLoaded', async function() {
+        const story = localStorage.getItem('generatedStory');
+        if (!story) {
+            alert('Ingen historie fundet. Generer venligst en historie først.');
+            window.location.href = 'index.html';
+            return;
+        }
+
+        document.getElementById('storyContent').innerHTML = story;
 
         try {
-            const response = await fetch('http://localhost:5001/generate-questions', {
+            const response = await fetch('http://localhost:5001/questions', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ text })
+                body: JSON.stringify({ text: story })
             });
 
             if (!response.ok) {
-                throw new Error('Netværksrespons var ikke ok');
+                throw new Error('Fejl ved generering af spørgsmål');
             }
 
             const data = await response.json();
-            document.getElementById('questionsBox').innerHTML = '<h3>Spørgsmål:</h3><p>' + (data.questions || 'Ingen spørgsmål modtaget.') + '</p>';
-            document.getElementById('questionsBox').style.display = 'block';
+            displayQuestions(data.questions);
+
         } catch (error) {
-            console.error('Fejl ved kald til OpenAI:', error);
-            alert('Der opstod en fejl ved kald til OpenAI API. Prøv igen senere.');
-        } finally {
-            generateButton.disabled = false;
-            generateButton.textContent = 'Generer Spørgsmål';
+            console.error('Fejl:', error);
+            document.getElementById('questionsContent').innerHTML =
+                `<div class="error">Fejl ved generering af spørgsmål: ${error.message}</div>`;
         }
+    });
+
+    function displayQuestions(questions) {
+        const questionsContainer = document.getElementById('questionsContent');
+        document.getElementById('totalQuestions').textContent = questions.length;
+
+        questions.forEach((q, qIndex) => {
+            const questionDiv = document.createElement('div');
+            questionDiv.className = 'question-container';
+
+            questionDiv.innerHTML = `
+                    <div class="question">${qIndex + 1}. ${q.question}</div>
+                    <div class="options">
+                        ${q.options.map((option, oIndex) => `
+                            <div class="option" 
+                                 onclick="selectAnswer(${qIndex}, ${oIndex})"
+                                 data-question="${qIndex}"
+                                 data-option="${oIndex}">
+                                ${option}
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+
+            questionsContainer.appendChild(questionDiv);
+            correctAnswers[qIndex] = q.correctAnswer;
+        });
+    }
+
+    function selectAnswer(questionIndex, optionIndex) {
+        const options = document.querySelectorAll(`[data-question="${questionIndex}"]`);
+        options.forEach(opt => opt.classList.remove('selected'));
+
+        const selectedOption = document.querySelector(`[data-question="${questionIndex}"][data-option="${optionIndex}"]`);
+        selectedOption.classList.add('selected');
+
+        selectedAnswers.set(questionIndex, optionIndex);
+    }
+
+    function checkAnswers() {
+        let score = 0;
+        const questions = correctAnswers.length;
+
+        correctAnswers.forEach((correctAnswer, index) => {
+            const selected = selectedAnswers.get(index);
+            const options = document.querySelectorAll(`[data-question="${index}"]`);
+
+            options.forEach(opt => {
+                const optIndex = parseInt(opt.dataset.option);
+                if (optIndex === correctAnswer) {
+                    opt.classList.add('correct');
+                } else if (optIndex === selected && selected !== correctAnswer) {
+                    opt.classList.add('incorrect');
+                }
+            });
+
+            if (selected === correctAnswer) {
+                score++;
+            }
+        });
+
+        // Gem score i localStorage
+        totalScore = score;
+        localStorage.setItem('quizScore', totalScore);
+
+        // Opdater score visning i bunden
+        const scoreDisplay = document.createElement('div');
+        scoreDisplay.className = 'result-section';
+        scoreDisplay.innerHTML = `
+        <h2>Quiz Resultat</h2>
+        <div class="score-display">
+            Du fik ${score} ud af ${questions} rigtige!
+        </div>
+        <button onclick="window.location.href='/points.html'" class="nav-button">
+            Gå til Point Oversigt
+        </button>
+    `;
+
+        // Indsæt score display før historiesektionen
+        const storySection = document.querySelector('.story-section');
+        storySection.parentNode.insertBefore(scoreDisplay, storySection);
+
+        document.getElementById('checkButton').disabled = true;
     }
 </script>
 </body>

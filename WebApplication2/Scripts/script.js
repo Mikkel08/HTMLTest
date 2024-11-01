@@ -5,6 +5,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const inputContainer = document.getElementById("inputContainer");
     const responseBox = document.getElementById("responseBox");
 
+    let generatedStory = '';
+
     async function sendTestRequest() {
         sendButton.disabled = true;
         sendButton.classList.add('loading');
@@ -13,12 +15,12 @@ document.addEventListener("DOMContentLoaded", function () {
         const prompt = createPrompt();
 
         try {
-            const response = await fetch('http://localhost:5001/send-to-claude', { // Bemærk porten 5001
+            const response = await fetch('http://localhost:5001/send-to-claude', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({prompt})
+                body: JSON.stringify({ prompt })
             });
 
             if (!response.ok) {
@@ -27,13 +29,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const data = await response.json();
 
+            generatedStory = data.response || 'Ingen svar modtaget fra Claude';
+// Gem historien i localStorage
+            localStorage.setItem('generatedStory', generatedStory);
+
             document.getElementById('responseBox').innerHTML = `
-    <h3>Claude Resultat2:</h3>
-    <p>${data.response || 'Ingen svar modtaget fra Claude'}</p>
+    <h3>Claude Resultat:</h3>
+    <p>${generatedStory}</p>
     <button onclick="showInputFields()">Vis Inputfelter</button>
     <button onclick="goToQuiz()">Gå til Quiz</button>
 `;
-
 
             inputContainer.classList.add("hidden");
             responseBox.classList.remove("hidden");
