@@ -515,7 +515,7 @@
 
         // Get hero text input, fallback to default if empty
         const heroTextInput = document.getElementById('heroTextInput').value;
-        const heroText = heroTextInput.trim() === "" ? "Here are the topics we've selected for your onboarding:" : heroTextInput;
+        const heroText = heroTextInput.trim() === "" ? "Here are the topics we discussed during our onboarding meeting. I hope this summary helps make your journey smooth and enjoyable. It captures everything we talked about to ensure you feel confident as you get started. Please take your time to review these points, and know that I'm always here to support you as you embark on this new experience." : heroTextInput;
         document.querySelector('.hero-text').textContent = heroText;
 
         // Clear existing cards
