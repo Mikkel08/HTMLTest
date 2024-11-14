@@ -133,6 +133,7 @@
         <Content Include="Content\Site.css"/>
         <Content Include="public\generate_questions.html"/>
         <Content Include="public\index.html"/>
+        <Content Include="public\index2.html" />
         <Content Include="public\points.html"/>
         <Content Include="public\Scripts\bootstrap.js"/>
         <Content Include="public\Scripts\bootstrap.min.js"/>
