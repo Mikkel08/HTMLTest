@@ -222,6 +222,7 @@
     <div class="hero-overlay"></div>
     <div class="hero-content">
         <h1 class="hero-title">Create Onboarding Summary Page</h1>
+           <p class="hero-subtitle">Generate a custom onboarding summary page for your clients based on the topics discussed during your meeting.</p>
        
     </div>
 </div>
@@ -292,7 +293,7 @@
     <div class="card-container">
         <!-- Main Heading and Description -->
         <div class="summary-header">
-            <h2>Hi <span id="recipientNameDisplay"></span>,</h2>
+            <h2>Hello <span id="recipientNameDisplay"></span>,</h2>
             <p class="hero-text">Here are the topics we discussed during our onboarding meeting. I hope this summary helps make your journey smooth and enjoyable. It captures everything we talked about to ensure you feel confident as you get started. Please take your time to review these points, and know that I'm always here to support you as you embark on this new experience.</p>
         </div>
 
@@ -494,16 +495,22 @@
     };
 
 
-
-
     function showSummary() {
         document.getElementById('formSection').classList.add('hidden');
         document.getElementById('summarySection').classList.remove('hidden');
     }
 
     function showForm() {
+        // Unhide the form section and hide the summary section
         document.getElementById('formSection').classList.remove('hidden');
         document.getElementById('summarySection').classList.add('hidden');
+
+        // Clear form values
+        document.getElementById('topicForm').reset();
+
+        // Reset the hero title and subtitle back to default
+        document.querySelector('.hero-title').textContent = 'Create Onboarding Summary Page';
+        document.querySelector('.hero-subtitle').textContent = 'Generate a custom onboarding summary page for your clients based on the topics discussed during your meeting.';
     }
 
     document.getElementById('topicForm').addEventListener('submit', function(e) {
@@ -516,7 +523,10 @@
         // Get hero text input, fallback to default if empty
         const heroTextInput = document.getElementById('heroTextInput').value;
         const heroText = heroTextInput.trim() === "" ? "Here are the topics we discussed during our onboarding meeting. I hope this summary helps make your journey smooth and enjoyable. It captures everything we talked about to ensure you feel confident as you get started. Please take your time to review these points, and know that I'm always here to support you as you embark on this new experience." : heroTextInput;
-        document.querySelector('.hero-text').textContent = heroText;
+
+        document.querySelector('.hero-title').textContent = `${recipientName}'s Onboarding Summary`;
+        document.querySelector('.hero-subtitle').textContent = "Welcome to your personalized onboarding summary page.";
+        document.querySelector('.summary-header').querySelector('.hero-text').textContent = heroText;
 
         // Clear existing cards
         const cardContainer = document.getElementById('cardContainer');
@@ -551,6 +561,10 @@
 
         showSummary();
     });
+
+    // Back button click event listener
+    document.querySelector('.back-button').addEventListener('click', showForm);
+
 
 </script>
 </body>
