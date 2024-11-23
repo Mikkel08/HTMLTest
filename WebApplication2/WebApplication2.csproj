@@ -131,6 +131,7 @@
         <Content Include="fonts\glyphicons-halflings-regular.svg"/>
         <Content Include="Global.asax"/>
         <Content Include="Content\Site.css"/>
+        <Content Include="public\components\ProjectCarousel.jsx" />
         <Content Include="public\css\styles.css" />
         <Content Include="public\generate_questions.html"/>
         <Content Include="public\index.html"/>

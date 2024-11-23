@@ -43,7 +43,7 @@
 </div>
 <div class="section">
     <div class="section-header">
-        <div class="section-icon" data-tooltip="ROI: Clear journey visualization reduces follow-up emails by 40%. Transparent onboarding timeline increases client engagement and reduces time-to-value. Customer Success teams save 10+ hours per week.">
+        <div class="section-icon" data-tooltip="ROI: Structured onboarding process increases successful customer onboarding by 65%. PRM guidance reduces time-to-value by 45% and increases early adoption rates.">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
             </svg>
@@ -71,7 +71,7 @@
 </div>
 <div class="section">
     <div class="section-header">
-        <div class="section-icon" data-tooltip="Available Tools ROI: $500K annual savings through improved workflow efficiency and reduced training time">
+        <div class="section-icon" data-tooltip="ROI: Centralized tool access increases product adoption by 25%. Customers report 30% faster implementation times. Annual efficiency savings of $500K.">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
             </svg>
@@ -111,7 +111,7 @@
 
 <div class="section">
     <div class="section-header">
-        <div class="section-icon" data-tooltip="Available Tools ROI: $500K annual savings through improved workflow efficiency and reduced training time">
+        <div class="section-icon" data-tooltip="ROI: Ticket dashboard reduces resolution time by 35%. Predictive analytics prevent 20% of potential issues. Customer satisfaction scores improved by 40%.">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
             </svg>
@@ -161,9 +161,88 @@
         </div>
     </div>
 </div>
+<!-- Featured Projects Section container -->
+
 <div class="section">
     <div class="section-header">
-        <div class="section-icon" data-tooltip="Available Tools ROI: $500K annual savings through improved workflow efficiency and reduced training time">
+        <div class="section-icon" data-tooltip="ROI: Interactive project showcase increases engagement by 45%. Carousel format improves content discovery and reduces bounce rates by 30%.">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+            </svg>
+        </div>
+        <h2>Featured Projects</h2>
+    </div>
+
+    <!-- Carousel container with adjusted width -->
+    <div class="carousel-container">
+        <button class="carousel-button prev" onclick="moveSlide(-1)">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+        </button>
+
+        <div class="carousel-track">
+            <div class="carousel-slides">
+                <div class="carousel-slide">
+                    <div class="card">
+                        <img src="images/Mazda1.jpg" alt="Project 1" class="card-image">
+                        <h3>Mixed reality surgical training</h3>
+                        <p>VirtaMed LaparoS uses Unity's real-time 3D technology for hyperrealistic surgical training.</p>
+                        <a href="#" class="button">VIEW POST</a>
+                    </div>
+                </div>
+                <div class="carousel-slide">
+                    <div class="card">
+                        <img src="images/Mazda1.jpg" alt="Project 1" class="card-image">
+                        <h3>Mixed reality surgical training</h3>
+                        <p>VirtaMed LaparoS uses Unity's real-time 3D technology for hyperrealistic surgical training.</p>
+                        <a href="#" class="button">VIEW POST</a>
+                    </div>
+                </div>
+                <div class="carousel-slide">
+                    <div class="card">
+                        <img src="images/Mazda1.jpg" alt="Project 1" class="card-image">
+                        <h3>Mixed reality surgical training</h3>
+                        <p>VirtaMed LaparoS uses Unity's real-time 3D technology for hyperrealistic surgical training.</p>
+                        <a href="#" class="button">VIEW POST</a>
+                    </div>
+                </div>
+
+                <!-- Repeat for other slides -->
+            </div>
+        </div>
+
+        <button class="carousel-button next" onclick="moveSlide(1)">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+        </button>
+    </div>
+
+
+
+<script>
+    let currentSlide = 0;
+    const totalSlides = document.querySelectorAll('.carousel-slide').length;
+
+    function updateSlides() {
+        const slides = document.querySelector('.carousel-slides');
+        slides.style.transform = `translateX(-${currentSlide * (100 / totalSlides)}%)`;
+    }
+
+    function moveSlide(direction) {
+        currentSlide = (currentSlide + direction + totalSlides) % totalSlides;
+        updateSlides();
+    }
+
+    // Optional: Auto-play
+    setInterval(() => moveSlide(1), 5000);
+</script>
+</div>
+
+<div class="section">
+    <div class="section-header">
+        <div class="section-icon" data-tooltip="ROI: Ticket dashboard reduces resolution time by 35%. Predictive analytics prevent 20% of potential issues. Customer satisfaction scores improved by 40%.">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
             </svg>

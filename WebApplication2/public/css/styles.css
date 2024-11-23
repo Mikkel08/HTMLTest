@@ -349,3 +349,81 @@ p {
     margin-bottom: 1px; /* Control space before button */
 }
 
+/* Project Carousel Styles */
+.carousel-container {
+    position: relative;
+    max-width: 80rem;
+    margin: 0 auto;
+    padding: 2rem 4rem;
+    overflow: hidden;
+    min-height: 600px; /* Add minimum height to contain full cards */
+}
+
+.carousel-track {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    height: 100%; /* Ensure track takes full height */
+}
+
+.carousel-slides {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    width: 300%;  /* Accommodate all slides */
+    height: 100%; /* Ensure slides container takes full height */
+}
+
+.carousel-slide {
+    flex: 0 0 33.333%;  /* Each slide takes up one-third of the container */
+    padding: 0 1rem;
+    height: 100%; /* Ensure slide takes full height */
+}
+
+.card {
+    background: #1F2937;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 2rem; /* Add space at bottom */
+}
+
+.card-image {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 0.5rem 0.5rem 0 0;
+    margin-bottom: 1rem;
+}
+
+.card h3 {
+    margin: 1rem 0;
+    color: #60A5FA;
+}
+
+.card p {
+    flex-grow: 1; /* Allow text to take available space */
+    margin-bottom: 1.5rem; /* Space before button */
+    color: #9CA3AF;
+}
+
+.button {
+    margin-top: auto; /* Push button to bottom */
+    width: 100%; /* Full width button */
+    padding: 0.75rem;
+    background: #2563EB;
+    color: white;
+    text-align: center;
+    border-radius: 0.5rem;
+    text-decoration: none;
+}
+
+/* Ensure carousel buttons are properly positioned */
+.carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+}
+
