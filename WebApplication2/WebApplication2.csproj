@@ -137,6 +137,12 @@
         <Content Include="public\css\styles3.css" />
         <Content Include="public\css\styles.css" />
         <Content Include="public\generate_questions.html"/>
+        <Content Include="public\images\Don.jpg" />
+        <Content Include="public\images\Mazda.jpg" />
+        <Content Include="public\images\MR.jpg" />
+        <Content Include="public\images\shader-graph.jpg" />
+        <Content Include="public\images\visinos-intro.jpg" />
+        <Content Include="public\images\xr-hands.jpg" />
         <Content Include="public\index.html"/>
         <Content Include="public\index2.html" />
         <Content Include="public\index3.html" />
