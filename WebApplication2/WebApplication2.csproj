@@ -131,9 +131,11 @@
         <Content Include="fonts\glyphicons-halflings-regular.svg"/>
         <Content Include="Global.asax"/>
         <Content Include="Content\Site.css"/>
+        <Content Include="public\css\styles.css" />
         <Content Include="public\generate_questions.html"/>
         <Content Include="public\index.html"/>
         <Content Include="public\index2.html" />
+        <Content Include="public\index3.html" />
         <Content Include="public\points.html"/>
         <Content Include="public\Scripts\bootstrap.js"/>
         <Content Include="public\Scripts\bootstrap.min.js"/>

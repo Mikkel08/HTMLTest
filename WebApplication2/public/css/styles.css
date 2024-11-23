@@ -1,0 +1,351 @@
+body {
+    font-family: system-ui, -apple-system, sans-serif;
+    background: #141414;
+    color: white;
+    margin: 0;
+}
+
+.hero {
+    height: 400px;
+    position: relative;
+    background-image: url('https://unity.com/_next/image?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2Ffuvbjjlp%2Fproduction%2F21719743a156dfdd4165f16e5db1447901ff3e6a-1920x1080.jpg&w=3840&q=100');
+    background-size: cover;
+    background-position: center;
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, rgba(0,0,0,0.8), transparent);
+}
+
+.hero-content {
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 2rem;
+    max-width: 80rem;
+    margin: 0 auto;
+}
+
+.hero-title {
+    font-size: 4rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.hero-subtitle {
+    font-size: 1.25rem;
+    color: #9CA3AF;
+    max-width: 32rem;
+}
+
+.timeline {
+    background: #191919;
+    padding: 2rem;
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+    position: relative;
+}
+
+.timeline-item {
+    flex: 1;
+    position: relative;
+    text-align: center;
+}
+
+.timeline-item::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background: #2563EB;
+    top: 25px;
+    left: 50%;
+    z-index: 1;
+}
+
+.timeline-item:nth-child(1)::after,
+.timeline-item:nth-child(2)::after {
+    background: #22C55E;
+}
+
+.timeline-item:last-child::after {
+    display: none;
+}
+
+.timeline-item:nth-child(1) .timeline-dot,
+.timeline-item:nth-child(2) .timeline-dot {
+    background: #22C55E;
+}
+
+.timeline-dot {
+    width: 50px;
+    height: 50px;
+    background: #2563EB;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    position: relative;
+    z-index: 2;
+    color: white;
+    font-weight: bold;
+}
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 3rem; /* Controls space between cards */
+    max-width: 80rem;
+    margin: 0 auto;
+    padding: 1rem; /* Reduced padding around the grid */
+}
+
+
+.card {
+    background: #1F2937;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    transition: transform 0.2s;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+        min-height: 1px; /* Adjust value as needed */
+        margin-bottom: 1px; /* Add spacing between rows */
+    padding-bottom: 10px; /* Add spacing between rows */
+    
+}
+
+
+.card:hover {
+    transform: translateY(-4px);
+}
+
+.button {
+    background: #2563EB;
+    color: white;
+    padding: .75rem 1.5rem;
+    border-radius: 0.5rem;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    margin-top: 2px; /* Adjust value as needed */
+    transition: background-color 0.2s;
+}
+
+.button:hover {
+    background: #1D4ED8;
+}
+
+.section {
+    background: #191919;
+    padding: 1rem; /* Reduced from 2rem */
+    margin-top: 1rem; /* Reduced from 2rem */
+    margin: 1rem ; /* Adjusted margin */
+    margin-bottom: 10px; /* Added margin between section */
+    padding-bottom: 30px;
+}
+
+.section-header {
+    max-width: 80rem;
+    margin: 0 auto;
+    padding-bottom: 1rem; /* Reduced from 2rem */
+    display: flex;
+    align-items: center; /* Aligns icon and text vertically */
+    gap: 0.75rem; /* Space between icon and text */
+}
+.section-header h2 {
+    margin: 0; /* Removes default margins */
+}
+
+h3 {
+    margin-top: 0;
+    color: #60A5FA;
+}
+
+p {
+    color: #9CA3AF;
+    line-height: 1.5;
+}
+
+.meeting-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    max-width: 80rem;
+    margin: 0 auto;
+}
+
+.meeting-card {
+    background: #1F2937;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    display: flex;
+    gap: 1rem;
+}
+
+.meeting-icon {
+    width: 48px;
+    height: 48px;
+    background: #374151;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.meeting-content {
+    flex: 1;
+}
+
+.meeting-date {
+    color: #60A5FA;
+    font-size: 0.875rem;
+    margin-bottom: 0.5rem;
+}
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    max-width: 80rem;
+    margin: 0 auto 2rem auto;
+}
+
+.stat-card {
+    background: #1F2937;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #60A5FA;
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    color: #9CA3AF;
+    margin-bottom: 0.5rem;
+}
+
+.stat-trend {
+    font-size: 0.875rem;
+    color: #9CA3AF;
+}
+
+.stat-trend.positive {
+    color: #34D399;
+}
+
+.stat-trend.negative {
+    color: #F87171;
+}
+
+.tickets-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    max-width: 80rem;
+    margin: 0 auto;
+}
+
+.ticket-card {
+    background: #1F2937;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.ticket-priority {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+    width: fit-content;
+}
+
+.ticket-priority.high {
+    background: #FEE2E2;
+    color: #DC2626;
+}
+
+.ticket-priority.medium {
+    background: #FEF3C7;
+    color: #D97706;
+}
+
+.ticket-priority.low {
+    background: #ECFDF5;
+    color: #059669;
+}
+
+.ticket-meta {
+    display: flex;
+    justify-content: space-between;
+    color: #9CA3AF;
+    font-size: 0.875rem;
+    margin: 1rem 0;
+}
+
+.ticket-card .button {
+    margin-top: auto;
+}
+
+
+.section-icon {
+    width: 32px;
+    height: 32px;
+    background: #374151;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #60A5FA;
+}
+
+.section-icon {
+    position: relative;
+    cursor: help;
+}
+
+.section-icon:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #374151;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    width: max-content;
+    max-width: 300px;
+    font-size: 0.875rem;
+    color: white;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+}
+.tool-card {
+    min-height: 100px;
+    margin-bottom: 2rem;
+}
+.card h3 {
+    margin-bottom: 1px; /* Space between title and text */
+}
+.card p {
+    margin-top: 0; /* Remove default top margin of paragraph */
+    margin-bottom: 1px; /* Control space before button */
+}
+
