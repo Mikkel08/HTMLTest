@@ -173,7 +173,7 @@ body {
     margin: 0 auto;
     margin-bottom: 1rem; /* Add this to ensure space for rounded corners */
     transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-
+    
 }
 
 .card:hover {
@@ -192,7 +192,7 @@ body {
     border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
     margin-bottom: 1rem;
     border-radius: 10px;
-
+    
 }
 
 .card h3 {
@@ -220,7 +220,7 @@ body {
     text-align: center;
     margin-top: auto;
     transition: background-color 0.2s;
-
+    
 }
 .button.completed {
     background: #22C55E; /* Green for completed */
@@ -232,7 +232,7 @@ body {
 .button.completed:hover {
     background: #22C55E;  /* Darker green for hover */
 }
-
+    
 
 
 /* Meeting Components */
@@ -427,5 +427,5 @@ body {
     width: 400px;  /* Let it be responsive */
     margin: 0 auto;
     height: 90%;
-
+    
 }

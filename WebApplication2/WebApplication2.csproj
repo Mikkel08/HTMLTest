@@ -134,6 +134,7 @@
         <Content Include="public\chatbot.html" />
         <Content Include="public\components\ProjectCarousel.jsx" />
         <Content Include="public\css\chatbot.css" />
+        <Content Include="public\css\styles3.css" />
         <Content Include="public\css\styles.css" />
         <Content Include="public\generate_questions.html"/>
         <Content Include="public\index.html"/>
