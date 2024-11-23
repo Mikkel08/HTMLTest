@@ -34,17 +34,17 @@ const ProjectCarousel = () => {
         {
             title: "Project Example 1",
             description: "Description of the first project showcasing its key features and innovations.",
-            imagePath: "Mazda1.jpg"
+            imagePath: "Mazda.jpg"
         },
         {
             title: "Project Example 2",
             description: "Description of the second project highlighting its unique aspects and achievements.",
-            imagePath: "Mazda2.jpg"
+            imagePath: "Don.jpg"
         },
         {
             title: "Project Example 3",
             description: "Description of the third project emphasizing its impact and technical excellence.",
-            imagePath: "Mazda3.jpg"
+            imagePath: "MR.jpg"
         }
     ];
 

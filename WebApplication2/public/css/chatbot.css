@@ -1,0 +1,251 @@
+/* Chat Widget Container */
+.chat-widget {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+/* Chat Button */
+.chat-button {
+    background: #2563EB;
+    color: white;
+    padding: 1rem 1.5rem;
+    border-radius: 2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+.chat-button:hover {
+    transform: translateY(-2px);
+}
+
+/* Modify the chat window CSS to use a class instead of hover */
+.chat-window {
+    position: absolute;
+    bottom: calc(100% + 1rem);
+    right: 0;
+    width: 350px;
+    height: 500px;
+    background: #1F2937;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    transform: translateY(20px);
+    pointer-events: none;
+    transition: all 0.3s ease;
+}
+
+.chat-window.active {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: all;
+}
+
+.chat-widget:hover .chat-window {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: all;
+}
+
+/* Chat Header */
+.chat-header {
+    padding: 1rem;
+    background: #374151;
+    border-radius: 0.5rem 0.5rem 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chat-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: white;
+    font-weight: bold;
+}
+
+.minimize-button {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 0.25rem;
+}
+
+/* Chat Messages */
+.chat-messages {
+    flex: 1;
+    padding: 1rem;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.message {
+    max-width: 80%;
+    padding: 0.75rem 1rem;
+    border-radius: 1rem;
+    position: relative;
+}
+
+.message.bot {
+    background: #374151;
+    color: white;
+    align-self: flex-start;
+    border-bottom-left-radius: 0.25rem;
+}
+
+.message.user {
+    background: #2563EB;
+    color: white;
+    align-self: flex-end;
+    border-bottom-right-radius: 0.25rem;
+}
+
+.message p {
+    margin: 0;
+    color: white;
+}
+
+.timestamp {
+    font-size: 0.75rem;
+    color: #9CA3AF;
+    margin-top: 0.25rem;
+    display: block;
+}
+
+/* Quick Actions */
+.quick-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin: 1rem 0;
+    transition: opacity 0.3s ease;
+}
+
+.action-button {
+    background: #374151;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+    text-align: left;
+    transition: background-color 0.2s;
+}
+
+.action-button:hover {
+    background: #4B5563;
+}
+
+.action-button svg {
+    flex-shrink: 0;
+}
+
+/* Booking Interface */
+.booking-interface {
+    background: #374151;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin: 1rem 0;
+    transition: opacity 0.3s ease;
+}
+
+.booking-interface.hidden {
+    display: none;
+}
+
+.booking-inputs {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.booking-date,
+.booking-time {
+    flex: 1;
+    padding: 0.75rem 1rem;
+    border: none;
+    border-radius: 0.5rem;
+    background: #1F2937;
+    color: white;
+}
+
+.booking-confirm {
+    width: 100%;
+    background: #2563EB;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.booking-confirm:hover {
+    background: #1D4ED8;
+}
+
+/* Chat Input */
+.chat-input {
+    padding: 1rem;
+    background: #374151;
+    border-radius: 0 0 0.5rem 0.5rem;
+    display: flex;
+    gap: 0.5rem;
+}
+
+.chat-input input {
+    flex: 1;
+    padding: 0.75rem 1rem;
+    border: none;
+    border-radius: 0.5rem;
+    background: #1F2937;
+    color: white;
+}
+
+.chat-input input::placeholder {
+    color: #9CA3AF;
+}
+
+.send-button {
+    background: #2563EB;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.75rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.send-button:hover {
+    background: #1D4ED8;
+}
+
+/* Hide scrollbar but maintain functionality */
+.chat-messages {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.chat-messages::-webkit-scrollbar {
+    display: none;
+}

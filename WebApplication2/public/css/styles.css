@@ -1,3 +1,4 @@
+/* Base Styles */
 body {
     font-family: system-ui, -apple-system, sans-serif;
     background: #141414;
@@ -5,6 +6,7 @@ body {
     margin: 0;
 }
 
+/* Hero Section */
 .hero {
     height: 400px;
     position: relative;
@@ -42,6 +44,59 @@ body {
     max-width: 32rem;
 }
 
+/* Section Layouts */
+.section {
+    background: #191919;
+    padding: 1rem;
+    margin: 1rem;
+    margin-bottom: 10px;
+    padding-bottom: 30px;
+}
+
+.section-header {
+    max-width: 80rem;
+    margin: 0 auto;
+    padding-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.section-header h2 {
+    margin: 0;
+}
+
+.section-icon {
+    width: 32px;
+    height: 32px;
+    background: #374151;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #60A5FA;
+    position: relative;
+    cursor: help;
+}
+
+.section-icon:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #374151;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    width: max-content;
+    max-width: 300px;
+    font-size: 0.875rem;
+    color: white;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+}
+
+/* Timeline Components */
 .timeline {
     background: #191919;
     padding: 2rem;
@@ -68,18 +123,13 @@ body {
     z-index: 1;
 }
 
-.timeline-item:nth-child(1)::after,
-.timeline-item:nth-child(2)::after {
+
+.timeline-item:nth-child(1)::after {
     background: #22C55E;
 }
 
 .timeline-item:last-child::after {
     display: none;
-}
-
-.timeline-item:nth-child(1) .timeline-dot,
-.timeline-item:nth-child(2) .timeline-dot {
-    background: #22C55E;
 }
 
 .timeline-dot {
@@ -96,86 +146,96 @@ body {
     color: white;
     font-weight: bold;
 }
+
+.timeline-item:nth-child(1) .timeline-dot,
+.timeline-item:nth-child(2) .timeline-dot {
+    background: #22C55E;
+}
+
+/* Card Grid Layout */
 .card-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 3rem; /* Controls space between cards */
+    gap: 3rem;
     max-width: 80rem;
     margin: 0 auto;
-    padding: 1rem; /* Reduced padding around the grid */
+    padding: 1rem;
 }
 
-
+/* Card Components */
 .card {
     background: #1F2937;
     border-radius: 0.5rem;
     padding: 1.5rem;
-    transition: transform 0.2s;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    height: 100%;
-        min-height: 1px; /* Adjust value as needed */
-        margin-bottom: 1px; /* Add spacing between rows */
-    padding-bottom: 10px; /* Add spacing between rows */
+    width: auto;  /* Change from 400px to auto */
+    margin: 0 auto;
+    margin-bottom: 1rem; /* Add this to ensure space for rounded corners */
+    transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
     
 }
 
-
 .card:hover {
-    transform: translateY(-4px);
+    transform: scale(1.05);
+    /* With easing function */
+    transition: transform 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.card:not(.completed):hover {
+    transform: scale(1.05);
 }
 
+.card-image {
+    width: 100%;
+    height: 200px;  /* Reduce this from 180px or 250px to 150px */
+    object-fit: cover;
+    border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+    margin-bottom: 1rem;
+    border-radius: 10px;
+    
+}
+
+.card h3 {
+    margin: 0.5rem 0;
+    color: #60A5FA;
+    font-size: 1.1rem;
+}
+
+.card p {
+    color: #9CA3AF;
+    line-height: 1.5;
+    margin: 0.5rem 0 1rem 0;
+    flex-grow: 1;
+}
+
+/* Button Styles */
 .button {
     background: #2563EB;
     color: white;
-    padding: .75rem 1.5rem;
+    padding: 0.75rem 1.5rem;
     border-radius: 0.5rem;
     border: none;
     cursor: pointer;
     text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 2px;
-    margin-top: 2px; /* Adjust value as needed */
+    text-align: center;
+    margin-top: auto;
     transition: background-color 0.2s;
+    
 }
-
+.button.completed {
+    background: #22C55E; /* Green for completed */
+}
 .button:hover {
     background: #1D4ED8;
 }
 
-.section {
-    background: #191919;
-    padding: 1rem; /* Reduced from 2rem */
-    margin-top: 1rem; /* Reduced from 2rem */
-    margin: 1rem ; /* Adjusted margin */
-    margin-bottom: 10px; /* Added margin between section */
-    padding-bottom: 30px;
+.button.completed:hover {
+    background: #22C55E;  /* Darker green for hover */
 }
+    
 
-.section-header {
-    max-width: 80rem;
-    margin: 0 auto;
-    padding-bottom: 1rem; /* Reduced from 2rem */
-    display: flex;
-    align-items: center; /* Aligns icon and text vertically */
-    gap: 0.75rem; /* Space between icon and text */
-}
-.section-header h2 {
-    margin: 0; /* Removes default margins */
-}
 
-h3 {
-    margin-top: 0;
-    color: #60A5FA;
-}
-
-p {
-    color: #9CA3AF;
-    line-height: 1.5;
-}
-
+/* Meeting Components */
 .meeting-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -212,6 +272,8 @@ p {
     font-size: 0.875rem;
     margin-bottom: 0.5rem;
 }
+
+/* Stats Components */
 .stats-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -252,6 +314,7 @@ p {
     color: #F87171;
 }
 
+/* Ticket Components */
 .tickets-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -300,130 +363,69 @@ p {
     margin: 1rem 0;
 }
 
-.ticket-card .button {
-    margin-top: auto;
-}
-
-
-.section-icon {
-    width: 32px;
-    height: 32px;
-    background: #374151;
-    border-radius: 0.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #60A5FA;
-}
-
-.section-icon {
-    position: relative;
-    cursor: help;
-}
-
-.section-icon:hover::after {
-    content: attr(data-tooltip);
-    position: absolute;
-    bottom: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #374151;
-    padding: 0.75rem;
-    border-radius: 0.5rem;
-    width: max-content;
-    max-width: 300px;
-    font-size: 0.875rem;
-    color: white;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    z-index: 10;
-}
-.tool-card {
-    min-height: 100px;
-    margin-bottom: 2rem;
-}
-.card h3 {
-    margin-bottom: 1px; /* Space between title and text */
-}
-.card p {
-    margin-top: 0; /* Remove default top margin of paragraph */
-    margin-bottom: 1px; /* Control space before button */
-}
-
-/* Project Carousel Styles */
+/* Carousel Components */
 .carousel-container {
     position: relative;
     max-width: 80rem;
     margin: 0 auto;
     padding: 2rem 4rem;
     overflow: hidden;
-    min-height: 600px; /* Add minimum height to contain full cards */
+    min-height: 450px;  /* Adjust this value - make it smaller */
 }
 
 .carousel-track {
     position: relative;
     width: 100%;
     overflow: hidden;
-    height: 100%; /* Ensure track takes full height */
 }
 
 .carousel-slides {
     display: flex;
     transition: transform 0.5s ease-in-out;
-    width: 300%;  /* Accommodate all slides */
-    height: 100%; /* Ensure slides container takes full height */
+    width: 300%;
 }
 
 .carousel-slide {
-    flex: 0 0 33.333%;  /* Each slide takes up one-third of the container */
+    flex: 0 0 33.333%;
     padding: 0 1rem;
-    height: 100%; /* Ensure slide takes full height */
 }
 
-.card {
-    background: #1F2937;
-    border-radius: 0.5rem;
-    padding: 1.5rem;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 2rem; /* Add space at bottom */
-}
-
-.card-image {
-    width: 100%;
-    height: 250px;
-    object-fit: cover;
-    border-radius: 0.5rem 0.5rem 0 0;
-    margin-bottom: 1rem;
-}
-
-.card h3 {
-    margin: 1rem 0;
-    color: #60A5FA;
-}
-
-.card p {
-    flex-grow: 1; /* Allow text to take available space */
-    margin-bottom: 1.5rem; /* Space before button */
-    color: #9CA3AF;
-}
-
-.button {
-    margin-top: auto; /* Push button to bottom */
-    width: 100%; /* Full width button */
-    padding: 0.75rem;
-    background: #2563EB;
-    color: white;
-    text-align: center;
-    border-radius: 0.5rem;
-    text-decoration: none;
-}
-
-/* Ensure carousel buttons are properly positioned */
 .carousel-button {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    z-index: 10;
+    background: #374151;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
+.carousel-button:hover {
+    background: #4B5563;
+}
+
+.carousel-button.prev {
+    left: 0;
+}
+
+.carousel-button.next {
+    right: 0;
+}
+.carousel-card {
+    background: #1F2937;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    width: 400px;  /* Let it be responsive */
+    margin: 0 auto;
+    height: 90%;
+    
+}
